@@ -1,37 +1,15 @@
-import { useState } from "react";
-import ExibeNota from "./components/Exibenota"
-import Contador from "./components/contador";
-import BoasVindas from "./components/BoasVindas";
+import { Avatar, Button, } from "@mui/material";
+import Img from "./components/baki.jpg";
 
-
-function App(props) {
-
-  
-
-
-  let nota = props.nota;
-  let aprovado = false;
-  let reprovado = false;
-  if(nota > 5){
-    aprovado = true;
-  } else {
-    reprovado= true;
-  }
-
-  
-
-  return (
-    <>
-      { aprovado && 
-      <ExibeNota mensagem="aprovado" nota={props.nota}/>
-       }
-      { reprovado && 
-      <ExibeNota mensagem="reprovado" nota={props.nota}/>
-      }  
-      <Contador/>
-      <BoasVindas/>
-    </>
-  );
-}
+function App(){
+    
+    return (
+      <>
+        <h1>Home</h1>
+        <Button variant="contained">Contained</Button>
+        <Button variant= "outlined">Vazio</Button>
+        <Avatar alt="Remy Sharp" src={Img} />
+      </>
+  );}
 
 export default App;
