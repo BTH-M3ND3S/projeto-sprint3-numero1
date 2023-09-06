@@ -1,26 +1,9 @@
-import { Box, Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
-    const theme = createTheme({
-      palette: {
-        mode: 'light',
-        primary: {
-          main: '#3facb5',
-        },
-        secondary: {
-          main: '#ff0004',
-        },
-        error: {
-          main: '#ff0000',
-        },
-        warning: {
-          main: '#fffe00',
-        },
-      },
-    });
+   
 
 function Login() {
 
@@ -31,6 +14,8 @@ function Login() {
   const [ login, setLogin ] = useState( false );
 
   const navigate = useNavigate();
+
+  /* se houver mudança no login, as informações de usuário serão transformadas em json e salvas no local storage e os campos email e senha serão limpos, e o usuário será redirecionado para a página principal */
   useEffect(()=>{
     if(login){
       localStorage.setItem("usuario" , JSON.stringify( {email: email }))
@@ -38,12 +23,11 @@ function Login() {
       setSenha("");
       navigate("/");
     }
-
   },[login]);
 
   function Autenticar(evento){
     evento.preventDefault();
-    fetch( "https://api.escuelajs.co/api/v1/auth/login",{
+    fetch( "http://10.139.75.32:8080/login",{
       method: "POST",
       headers: {
         'Content-type' : 'application/json'
@@ -52,25 +36,25 @@ function Login() {
 
         {
           email: email,
-          password: senha
+          senha: senha
         }
       )
     })
     .then( (resposta) => resposta.json())
     .then( (json) => {  
-      if( json.statusCode === 401) {
-        setErro( true);
-      }else{
+      if( json.user) {
         setLogin ( true );
+        
+      }else{
+        setErro( true);
       }
       
      })
     .catch( (erro ) => { setErro( true)})
-  
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    
     <Container component="section" maxWidth= "xs">
       <Box sx={{
         mt:30,
@@ -82,6 +66,7 @@ function Login() {
         alignItems:"center"
       }}>
         <Typography component="h1" variant='h4'>Entrar</Typography>
+        { erro && ( <Alert severity="warning">Revise seus dados e tente novamente.</Alert>) }
         <Box component="form" onSubmit={Autenticar}>
           <TextField  
           type="Email" 
@@ -115,7 +100,7 @@ function Login() {
       </Box>
 
     </Container>
-    </ThemeProvider>
+    
   )
 }
 
