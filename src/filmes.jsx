@@ -16,7 +16,7 @@ function Filmes() {
     const [ mandarfilme, setMandarfilme ] = useState( false );
     const[ erro, setErro] = useState(false)
 
-    const top100Films = [
+    const top100Films = [ 
         { label: 'Ação'  },
         { label: 'Aventura' },
         { label: 'Terror'  },
@@ -26,7 +26,7 @@ function Filmes() {
       ];
     function mandarfilmeprobanco( evento ) {
         evento.preventDefault();
-        fetch( "http://10.139.75.32:8080/users",{
+        fetch( process.env.REACT_APP_BACKEND + "filmes" , {
       method: "POST",
       headers: {
         'Content-type' : 'application/json'
@@ -44,36 +44,18 @@ function Filmes() {
     })
     .then( (resposta) => resposta.json())
     .then( (json) => {  
-      if( json.titulo) {
+      if( json._id) {
         setMandarfilme ( true );
+        setErro( false );
       }else{
         setErro( true);
+        setMandarfilme( false);
       }
       
      })
     .catch( (erro ) => { setErro( true)})
     }
-    useEffect(() =>
-    {
-        setTitulo("");
-        setDescricao("");
-        setAno("");
-        setDuracao("");
-        setCategoria("");
-        setImagem("")
-        setMandarfilme(false)
-    }, [mandarfilme]);
-    useEffect(()=>{
-        if(mandarfilme){
-          localStorage.setItem("usuario" , JSON.stringify( {titulo: titulo }))
-          setTitulo("");
-          setDescricao("");
-          setAno("");
-          setDuracao("");
-          setCategoria("");
-          setImagem("");
-        }
-      },[mandarfilme]);
+    
      return (
         <Container component="section" maxWidth= "40em">
         <Box sx={{
@@ -87,8 +69,8 @@ function Filmes() {
             }}>
                 <Typography component="h1" variant='h3'>Cadastrar um filme</Typography>
 
-                { erro && ( <Alert severity="warning" sx={{ mt: 2, mb: 2}}>Desculpe tente novamente.</Alert>) }
-                { mandarfilme && ( <Alert severity="success" sx={{ mt: 2, mb: 2}}>Obrigado por cadastrar o seu filme.</Alert>) }
+                { erro && ( <Alert severity="warning" sx={{ mt: 2, mb: 2}}>Desculpe tente novamente, por favor.</Alert>) }
+                { mandarfilme && ( <Alert severity="success" sx={{ mt: 2, mb: 2}}>Obrigado por cadastrar o seu filme!.</Alert>) }
 
                 <Box component="form" onSubmit={mandarfilmeprobanco}>
                     <TextField 
@@ -132,6 +114,7 @@ function Filmes() {
                     disablePortal
                     id="combo-box-demo"
                     value={categoria}
+                    onChange={(e)=> setCategoria(e.target.value)}
                     options={top100Films}
                     renderInput={(params) => <TextField {...params} label="Movie" />}
                     />
