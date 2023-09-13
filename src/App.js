@@ -1,4 +1,4 @@
-import { Avatar, Button, Container, } from "@mui/material";
+import { Avatar, Button, Container, colors, } from "@mui/material";
 import Img from "./components/baki.jpg";
 import { useEffect, useState } from "react";
 import Filme from "./components/filme";
@@ -18,8 +18,33 @@ function App(){
     })
     .then( (resposta) => resposta.json())
     .then( (json) => {  setFilmes( json)})    
-    .catch( (erro ) => { setErro( true)})
+    .catch( (error ) => { setErro( true)})
   }, [])
+
+    function Excluir(evento, id){
+      evento.preventDefault()
+      fetch( process.env.REACT_APP_BACKEND + "filmes",{
+        method: "DELETE",
+        headers: {
+          'Content-type' : 'application/json'
+        },
+        body: JSON.stringify(
+  
+          {
+            id: id
+          }
+        )
+      })
+      .then( (resposta) => resposta.json())
+      .then( (json) => {  
+        const novalista = filmes.filter( (filme) => filmes._id !== id);
+        setFilmes (novalista);       
+       })
+      .catch( (error ) => { setErro( true)})
+    }
+
+
+
     return (
       <>
       <h1>Filmes</h1>
@@ -27,7 +52,7 @@ function App(){
         display: "flex",
         flexflow: "row",
         flexWrap: "wrap",
-        gap: "2rem"
+        gap: "2rem",
       }}>
         
         
@@ -40,6 +65,8 @@ function App(){
             categoria={filme.categoria}
             ano={filme.ano}
             duracao={filme.duracao}
+            excluir={(e) => Excluir(e,filme._id)}
+            id={filme._id}
             />
           ))
         )}
@@ -48,3 +75,4 @@ function App(){
   );}
 
 export default App;
+;
