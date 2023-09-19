@@ -1,0 +1,72 @@
+/* Estilo para o container do header */
+
+body {
+  background-color: rgb(85, 39, 8);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  background-image: url("https://cdn.discordapp.com/attachments/1096969519785853069/1153494682656051300/64ff67ed9da2c136c99aab7a029dd540.png");
+}
+
+h2 {
+  color: white;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  /* Altere a cor de fundo conforme necessário */
+  color: white;
+  /* Altere a cor do texto conforme necessário */
+}
+
+/* Estilo para o logo */
+.Header img {
+  width: 70px;
+  max-height: 50px;
+}
+
+/* Estilo para a lista de menu */
+.Header ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo para os itens de menu */
+.Header li {
+  margin-right: 20px;
+  /* Espaçamento entre os itens de menu */
+}
+
+/* Estilo para os links de menu */
+.Header a {
+  text-decoration: none;
+  color: white;
+  /* Cor do texto dos links */
+  font-weight: bold;
+  /* Texto em negrito */
+}
+
+/* Estilo para o link de "Entrar" */
+.Header a[href="http://localhost:3000/login"] {
+  background-color: #ff5733;
+  /* Cor de fundo do link de Entrar */
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  /* Cor do texto do link de Entrar */
+  transition: background-color 0.3s;
+  /* Transição suave de cor */
+}
+
+/* Estilo de hover para o link de "Entrar" */
+.Header a[href="http://localhost:3000/login"]:hover {
+  background-color: #ff3e0f;
+  /* Cor de fundo do link de Entrar ao passar o mouse */
+}

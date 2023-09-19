@@ -4,59 +4,74 @@ import App from "./App";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './login';
 import Cadastro from "./components/cadastro";
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import Filmes from "./filmes"
-import EditaFilme from './components/EditaFilme';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Home from './components/Home'
+import DestalhesdoProduto from './components/detalhesdoproduto';
+import CadastrarProduto from './components/Cadastrarproduto'
+import Suporte from './components/suporte';
 
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#3facb5',
+      main: '#3f51b5',
     },
     secondary: {
-      main: '#ff0004',
+      main: '#2a89ff',
     },
-    error: {
-      main: '#ff0000',
+    text: {
+      hint: '#3d1fce',
+      disabled: 'rgba(255,0,0,0.38)',
+      secondary: 'rgba(255,255,255,0.7)',
+      primary: '#ffffff',
     },
-    warning: {
-      main: '#fffe00',
-    },
+
   },
 });
 
-  const router = createBrowserRouter(
-    [
-      {
-        path:"/",
-        element: <App/>
-      },
-      {
-        path:"/login",
-        element: <Login/>
-      },
-      {
-        path: "/cadastro",
-        element: <Cadastro />
-      },
-      {
-        path: "/filmes",
-        element: <Filmes />
-      },
-      {
-        path: "/Edicao/:id",
-        element: <EditaFilme/>
-      }
-    ]
-  )
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />
+    },
+    {
+      path: "/Home",
+      element: <Home />
+    },
+    {
+      path: "/DestalhesdoProduto",
+      element: <DestalhesdoProduto />
+    },
+    {
+      path: "/Cadastrarproduto",
+      element: <CadastrarProduto />
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/cadastro",
+      element: <Cadastro />
+    },
+    {
+      path: "/suporte",
+      element: <Suporte />
+    },
+
+
+  ]
+)
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
-  <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </ThemeProvider>
 );
+
 
 
