@@ -6,10 +6,10 @@ import Login from './login';
 import Cadastro from "./components/cadastro";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Home from './components/Home'
-import DestalhesdoProduto from './components/detalhesdoproduto';
 import CadastrarProduto from './components/Cadastrarproduto'
 import Suporte from './components/suporte';
-
+import LojaAberta from './components/lojaberta'
+import EditaProduto from './components/editaproduto'
 
 const theme = createTheme({
   palette: {
@@ -41,10 +41,6 @@ const router = createBrowserRouter(
       element: <Home />
     },
     {
-      path: "/DestalhesdoProduto",
-      element: <DestalhesdoProduto />
-    },
-    {
       path: "/Cadastrarproduto",
       element: <CadastrarProduto />
     },
@@ -59,6 +55,14 @@ const router = createBrowserRouter(
     {
       path: "/suporte",
       element: <Suporte />
+    },
+    {
+      path: "/lojaAberta",
+      element: < LojaAberta/>
+    },
+    {
+    path: "/Editaproduto",
+    element: < EditaProduto/>
     },
 
 

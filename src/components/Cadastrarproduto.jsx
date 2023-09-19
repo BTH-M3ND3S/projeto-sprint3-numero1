@@ -7,11 +7,10 @@ import Header2 from './header2'
 
 function CadastrarProduto() {
   const [nome, setNome] = useState("");
-  const [marca, setMarca] = useState("");
+  
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
   const [imagem, setImagem] = useState("");
-
   const [cadastro, setCadastro] = useState(false);
   const [erro, setErro] = useState(false)
 
@@ -26,7 +25,6 @@ function CadastrarProduto() {
 
         {
           nome: nome,
-          marca: marca,
           preco: preco,
           descricao: descricao,
           imagem: imagem,
@@ -40,13 +38,11 @@ function CadastrarProduto() {
         } else {
           setErro(true);
         }
-
       })
       .catch((erro) => { setErro(true) })
   }
   useEffect(() => {
     setNome("");
-    setMarca("");
     setPreco("");
     setDescricao("");
     setImagem("");
@@ -57,9 +53,8 @@ function CadastrarProduto() {
 
   useEffect(() => {
     if (cadastro) {
-      localStorage.setItem("usuario", JSON.stringify({ marca: marca }))
+      localStorage.setItem("Produto", JSON.stringify({ nome: nome }))
       setNome("");
-      setMarca("");
       setPreco("");
       setDescricao("");
       setImagem("");
@@ -96,15 +91,7 @@ function CadastrarProduto() {
               margin="normal"
               fullWidth>
             </TextField>
-            <TextField
-              type="text"
-              variant="filled"
-              label="Marca:"
-              value={marca}
-              onChange={(e) => setMarca(e.target.value)}
-              margin="normal"
-              fullWidth>
-            </TextField>
+            
             <TextField
               type="text"
               variant="filled"

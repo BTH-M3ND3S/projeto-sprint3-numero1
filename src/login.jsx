@@ -72,7 +72,6 @@ function Login() {
           {erro && (<Alert severity="warning">Revise seus dados e tente novamente.</Alert>)}
           <Box component="form" onSubmit={Autenticar}>
             <TextField
-
               type="Email"
               variant="filled"
               label="Email"

@@ -29,7 +29,7 @@ function Suporte() {
 
     try {
       // Enviar a solicitação POST para o servidor (substitua a URL do seu backend)
-      const response = await fetch('URL_DO_SEU_BACKEND', requestOptions);
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts', requestOptions);
 
       if (response.ok) {
         alert('Pedido de suporte enviado com sucesso!');
