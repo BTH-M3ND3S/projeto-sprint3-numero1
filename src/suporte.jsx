@@ -1,7 +1,7 @@
 // src/components/SupportForm.js
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
-import Header2 from './header2';
+import Header2 from './components/header2';
 
 function Suporte() {
   const [nome, setName] = useState('');

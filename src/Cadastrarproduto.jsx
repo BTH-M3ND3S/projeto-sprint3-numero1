@@ -2,13 +2,12 @@ import { Alert, Grid, Box, Button, Container, TextField, Typography, Link } from
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Header2 from './header2'
+import Header2 from './components/header2'
 
 
 function CadastrarProduto() {
-  const [nome, setNome] = useState("");
-  
-  const [preco, setPreco] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [ano, setAno] = useState("");
   const [descricao, setDescricao] = useState("");
   const [imagem, setImagem] = useState("");
   const [cadastro, setCadastro] = useState(false);
@@ -16,7 +15,7 @@ function CadastrarProduto() {
 
   function cadastrar(evento) {
     evento.preventDefault();
-    fetch('https://jsonplaceholder.typicode.com/posts', {
+    fetch(process.env.REACT_APP_BACKEND + "produtos ", {
       method: "POST",
       headers: {
         'Content-type': 'application/json'
@@ -24,16 +23,17 @@ function CadastrarProduto() {
       body: JSON.stringify(
 
         {
-          nome: nome,
-          preco: preco,
+          titulo: titulo,
+          ano: ano,
           descricao: descricao,
           imagem: imagem,
+          usuario: localStorage.getItem("usuario")
         }
       )
     })
       .then((resposta) => resposta.json())
       .then((json) => {
-        if (json.nome) {
+        if (json.titulo) {
           setCadastro(true);
         } else {
           setErro(true);
@@ -42,8 +42,8 @@ function CadastrarProduto() {
       .catch((erro) => { setErro(true) })
   }
   useEffect(() => {
-    setNome("");
-    setPreco("");
+    setTitulo("");
+    setAno("");
     setDescricao("");
     setImagem("");
     setCadastro(false)
@@ -53,9 +53,9 @@ function CadastrarProduto() {
 
   useEffect(() => {
     if (cadastro) {
-      localStorage.setItem("Produto", JSON.stringify({ nome: nome }))
-      setNome("");
-      setPreco("");
+      localStorage.setItem("Produto", JSON.stringify({ titulo: titulo }))
+      setTitulo("");
+      setAno("");
       setDescricao("");
       setImagem("");
       navigate("");
@@ -86,8 +86,8 @@ function CadastrarProduto() {
               type="text"
               variant="filled"
               label="Nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
               margin="normal"
               fullWidth>
             </TextField>
@@ -96,8 +96,8 @@ function CadastrarProduto() {
               type="text"
               variant="filled"
               label="Preço:"
-              value={preco}
-              onChange={(e) => setPreco(e.target.value)}
+              value={ano}
+              onChange={(e) => setAno(e.target.value)}
               margin="normal"
               fullWidth>
             </TextField>

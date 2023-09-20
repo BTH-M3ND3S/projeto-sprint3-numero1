@@ -1,21 +1,21 @@
 import { Box, Container, TextField, Grid, Button, Alert } from "@mui/material"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from './header' 
 
-function EditaFilme() {
+function Filme(produto) {
     const { id } = useParams();
     console.log(id);
 
-    const [nome, setNome] = useState("");
+    const [titulo, setTitulo] = useState("");
     const [descricao, setDescricao] = useState("");
-    const [preco, setPreco] = useState("");
+    const [ano, setAno] = useState("");
     const [imagem, setImagem] = useState("");
     const [editar, setEditar] = useState(false);
     const [erro, setErro] = useState(false);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_BACKEND + "filmes/" + id, {
+        const usuario = localStorage.getItem("usuario")
+        fetch(process.env.REACT_APP_BACKEND + "produtos/"+ usuario + "/" + id  , {
             method: "GET",
             headers: {
                 'Content-type': 'application/json'
@@ -24,9 +24,9 @@ function EditaFilme() {
             .then((resposta) => resposta.json())
             .then((json) => {
                 if (!json.status) {
-                    setNome(json.nome);
+                    setTitulo(json.titulo);
                     setDescricao(json.descricao);
-                    setPreco(json.preco);
+                    setAno(json.ano);
                     setImagem(json.imagem);
                 } else {
                     setErro("filme não encontrado");
@@ -38,7 +38,7 @@ function EditaFilme() {
 
     function Editar(evento) {
         evento.preventDefault();
-        fetch( process.env.REACT_APP_BACKEND + "filmes" , {
+        fetch( process.env.REACT_APP_BACKEND + "produtos" , {
             method: "PUT",
             headers: {
               'Content-type' : 'application/json'
@@ -46,16 +46,19 @@ function EditaFilme() {
             body: JSON.stringify(
               {
                   id: id,
-                  nome: nome,
+                  titulo: titulo,
                   descricao: descricao,
-                  preco: preco,
+                  ano: ano,
                   imagem:imagem,
+                  categoria:"",
+                  duracao:"",
+                  usuario: localStorage.getItem("usuario")
               }
             )
           })
           .then( (resposta) => resposta.json())
           .then( (json) => {  
-            if( json._id) {
+            if( json.titulo) {
               setEditar ( true );
               setErro( false );
             }else{
@@ -67,13 +70,11 @@ function EditaFilme() {
 
 
     return (
-        <>
-        <Header/>
         <Container>
 
             <Box sx={{
                 mt: 30,
-                backgroundColor: "gray",
+                backgroundColor: "#C4C4C4",
                 padding: "50px",
                 borderRadius: "10px",
                 display: "flex",
@@ -87,8 +88,8 @@ function EditaFilme() {
                         type="text"
                         variant="filled"
                         label="Titulo"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
+                        value={titulo}
+                        onChange={(e) => setTitulo(e.target.value)}
                         margin="normal"
                         fullWidth>
                     </TextField>
@@ -105,11 +106,12 @@ function EditaFilme() {
                         type="number"
                         variant="filled"
                         label="ano"
-                        value={preco}
-                        onChange={(e) => setPreco(e.target.value)}
+                        value={ano}
+                        onChange={(e) => setAno(e.target.value)}
                         margin="normal"
                         fullWidth>
                     </TextField>
+              
                     <TextField
                         type="text"
                         variant="filled"
@@ -119,13 +121,14 @@ function EditaFilme() {
                         margin="normal"
                         fullWidth>
                     </TextField>
-                    <Button type='submit' variant='contained' fullWidth sx={{ mt: 2, mb: 2 }}>Editar</Button>
-                    
+                    <Button type='submit' variant='contained' fullWidth sx={{ mt: 2, mb: 2 }}>Cadastrar</Button>
+                    <Grid color="blue" item>
+                        Já Possui Cadastro?
+                    </Grid>
                 </Box>
             </Box>
         </Container>
-        </>
     )
 }
 
-export default EditaFilme;
+export default Filme;

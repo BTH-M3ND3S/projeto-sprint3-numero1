@@ -3,16 +3,19 @@ import {
     CardMedia, Button, Box, Rating, Avatar,
 } from '@mui/material';
 import { useEffect, useState } from "react";
-import Produto from './produto'
+import Produto from './components/produto'
 
 function Pegardobanco() {
 
    
     const [produtos, setProdutos] = useState("");
     const [erro, setErro] = useState("");
+    
 
     useEffect(() => {
-        fetch( "https://jsonplaceholder.typicode.com/posts",{
+        const usuario = localStorage.getItem("usuario");
+
+        fetch( process.env.REACT_APP_BACKEND + "produtos/" + usuario,{
           method: "GET",
           headers: {
             'Content-type' : 'application/json'
@@ -23,7 +26,30 @@ function Pegardobanco() {
         .catch( (error ) => { setErro( true)})
       }, [])
 
-    return (
+   function Excluir(evento, id){
+      evento.preventDefault()
+      fetch( process.env.REACT_APP_BACKEND + "produtos",{
+        method: "DELETE",
+        headers: {
+          'Content-type' : 'application/json'
+        },
+        body: JSON.stringify(
+  
+          {
+            id: id,
+            usuario: localStorage.getItem("usuario")
+          }
+        )
+      })
+      .then( (resposta) => resposta.json())
+      .then( (json) => {  
+        const novalista = produtos.filter( (produto) => produto._id !== id);
+        setProdutos(novalista);     
+       })
+      .catch( (error ) => { setErro( true)})
+    }
+   
+      return (
         <>
          
          <Container sx={{
@@ -38,10 +64,12 @@ function Pegardobanco() {
           produtos.map((produto, index) =>(
             <Produto
             imagem={produto.imagem} 
-            nome={produto.nome}
+            nome={produto.titulo}
             descricao={produto.descricao}
-            preco={produto.preco}
+            preco={produto.ano} 
+            excluir={(e) => Excluir(e,produto._id)}
             id={produto._id}
+            
             />
           ))
         )}

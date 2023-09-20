@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Link, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Grid, Link, Typography, Button } from '@mui/material';
 import React from 'react'
 
 function Filme(produto) {
@@ -23,8 +23,8 @@ function Filme(produto) {
                   </Grid>
                 </CardContent>
         </CardActionArea>
-        <button onClick={produto.excluir}>Excluir </button>
-        <Link href={ "/Editaproduto" + produto.id}>Editar</Link>
+        <Button variant='outlined' onClick={produto.excluir}>Excluir </Button>
+        <Button variant='outlined'><Link href={ "/Editaproduto/" + produto.id }>Editar</Link></Button> 
     </Card>
   )
 }

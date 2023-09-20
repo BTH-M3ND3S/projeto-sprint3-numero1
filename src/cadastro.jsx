@@ -2,7 +2,7 @@ import { Alert, Grid, Box, Button, Container, TextField, Typography, Link, Radio
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Header2 from './header2'
+import Header2 from './components/header2'
 
 
 function Cadastro() {
@@ -19,7 +19,7 @@ function Cadastro() {
 
   function cadastrar(evento) {
     evento.preventDefault();
-    fetch('https://jsonplaceholder.typicode.com/posts', {
+    fetch(process.env.REACT_APP_BACKEND + "usuarios", {
       method: "POST",
       headers: {
         'Content-type': 'application/json'

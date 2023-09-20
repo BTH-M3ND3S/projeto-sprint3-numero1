@@ -20,10 +20,9 @@ function Login() {
   /* se houver mudança no login, as informações de usuário serão transformadas em json e salvas no local storage e os campos email e senha serão limpos, e o usuário será redirecionado para a página principal */
   useEffect(() => {
     if (login) {
-      localStorage.setItem("usuario", JSON.stringify({ email: email }))
       setEmail("");
       setSenha("");
-      navigate("http://localhost:3000/Home");
+      navigate("/Home");  
     }
   }, [login]);
 
@@ -45,9 +44,11 @@ function Login() {
       .then((resposta) => resposta.json())
       .then((json) => {
         if (json.user) {
+          localStorage.setItem( "usuario" , JSON.stringify(json.user._id))
           setLogin(true);
 
         } else {
+          localStorage.removeItem("usuario")
           setErro(true);
         }
 
@@ -57,7 +58,7 @@ function Login() {
 
   return (
     <>
-      <Header2 />
+      <Header2/>
       <Container component="section" maxWidth="xs">
         <Box sx={{
           mt: 10,

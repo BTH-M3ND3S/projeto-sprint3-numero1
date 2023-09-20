@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom/client';
 import App from "./App";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './login';
-import Cadastro from "./components/cadastro";
+import Cadastro from "./cadastro";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Home from './components/Home'
-import CadastrarProduto from './components/Cadastrarproduto'
-import Suporte from './components/suporte';
-import LojaAberta from './components/lojaberta'
-import EditaProduto from './components/editaproduto'
+import Home from './Home'
+import CadastrarProduto from './Cadastrarproduto'
+import Suporte from './suporte';
+import LojaAberta from './lojaberta'
+import EditaProduto from './editaproduto'
 
 const theme = createTheme({
   palette: {
@@ -61,7 +61,7 @@ const router = createBrowserRouter(
       element: < LojaAberta/>
     },
     {
-    path: "/Editaproduto",
+    path: "/Editaproduto/:id",
     element: < EditaProduto/>
     },
 
